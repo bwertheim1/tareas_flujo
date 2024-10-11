@@ -10,10 +10,15 @@ Original file is located at
 import pandas as pd
 import networkx as nx
 import numpy as np
+import os
 
-ubicacion_produccion = pd.read_csv("ubicacion_produccion.csv")
-ubicacion_bodegas = pd.read_csv("ubicacion_bodegas_adicionales.csv")
-ubicacion_demanda = pd.read_csv("ubicacion_demanda.csv")
+ruta1 = os.path.join('ubicacion_produccion.csv')
+ruta2 = os.path.join("ubicacion_bodegas_adicionales.csv")
+ruta3 = os.path.join("ubicacion_demanda.csv")
+
+ubicacion_produccion = pd.read_csv(ruta1)
+ubicacion_bodegas = pd.read_csv(ruta2)
+ubicacion_demanda = pd.read_csv(ruta3)
 
 # Se crea un DataFrame combinado con todos los nodos y ubicaciones
 nodos_produccion = ubicacion_produccion[['id_nodo', 'x', 'y']].copy()
