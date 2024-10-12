@@ -12,9 +12,9 @@ import networkx as nx
 import numpy as np
 import os
 
-ruta1 = os.path.join('ubicacion_produccion.csv')
-ruta2 = os.path.join("ubicacion_bodegas_adicionales.csv")
-ruta3 = os.path.join("ubicacion_demanda.csv")
+ruta1 = os.path.join('datos','ubicacion_produccion.csv')
+ruta2 = os.path.join('datos',"ubicacion_bodegas_adicionales.csv")
+ruta3 = os.path.join('datos',"ubicacion_demanda.csv")
 
 ubicacion_produccion = pd.read_csv(ruta1)
 ubicacion_bodegas = pd.read_csv(ruta2)
