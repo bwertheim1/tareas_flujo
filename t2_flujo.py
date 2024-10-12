@@ -11,6 +11,7 @@ import pandas as pd
 import networkx as nx
 import numpy as np
 import os
+import osmnx as ox
 
 ruta1 = os.path.join('datos','ubicacion_produccion.csv')
 ruta2 = os.path.join('datos',"ubicacion_bodegas_adicionales.csv")
