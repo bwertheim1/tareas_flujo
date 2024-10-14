@@ -71,3 +71,76 @@ matriz_costos_df = pd.DataFrame(matriz_costos, index=nodos_relevantes, columns=n
 # Se muestra la matriz de costos
 print("Matriz de Costos de Transporte entre Nodos:")
 print(matriz_costos_df)
+
+# CADA FILA ES UN NODO DE PRODUCCION/BODEGA/DEMANDA
+
+ruta4 = os.path.join('datos','precio_venta.csv')
+ruta5 = os.path.join('datos',"oferta_min_proveedores.csv")
+ruta6 = os.path.join('datos',"oferta_max_proveedores.csv")
+ruta7 = os.path.join('datos',"inventario_inicial.csv")
+ruta8 = os.path.join('datos',"inventario_inicial_adicional.csv")
+ruta9 = os.path.join('datos',"demanda_min.csv")
+ruta10 = os.path.join('datos',"demanda_max.csv")
+ruta11 = os.path.join('datos',"costo_produccion.csv")
+ruta12 = os.path.join('datos',"costo_fijo_bodega_adicional.csv")
+ruta13 = os.path.join('datos',"costo_almacenaje_adicional.csv")
+ruta14 = os.path.join('datos',"costo_almacenaje.csv")
+ruta15 = os.path.join('datos',"capacidad_almacenaje.csv")
+ruta16 = os.path.join('datos',"capacidad_almacenaje_adicional.csv")
+
+precio_venta = pd.read_csv(ruta4)
+oferta_min_proveedores = pd.read_csv(ruta5)
+oferta_max_proveedores = pd.read_csv(ruta6)
+inventario_inicial = pd.read_csv(ruta7)
+inventario_inicial_adicional = pd.read_csv(ruta8)
+demanda_min = pd.read_csv(ruta9)
+demanda_max = pd.read_csv(ruta10)
+costo_produccion = pd.read_csv(ruta11)
+costo_fijo_bodega_adicional = pd.read_csv(ruta12)
+costo_almacenaje_adicional = pd.read_csv(ruta13)
+costo_almacenaje = pd.read_csv(ruta14)
+capacidad_almacenaje = pd.read_csv(ruta15)
+capacidad_almacenaje_adicional = pd.read_csv(ruta16)
+
+
+# Se crea un DataFrame combinado con todos los nodos y ubicaciones
+    
+    # LAS COLUMNAS SON LOS PERIODOS PRODUCTIVOS
+precio_venta = precio_venta[['1','2','3','4','5','6','7']]
+precio_venta['tipo'] = 'demanda'
+
+oferta_min_proveedores =oferta_min_proveedores[['1','2','3','4','5','6','7']]
+oferta_min_proveedores['tipo'] = 'produccion'
+
+oferta_max_proveedores = oferta_max_proveedores[['1','2','3','4','5','6','7']]
+oferta_max_proveedores['tipo'] = 'produccion'
+
+inventario_inicial = inventario_inicial[['1']]
+inventario_inicial['tipo'] = 'produccion'
+
+inventario_inicial_adicional = inventario_inicial_adicional[['1']]
+inventario_inicial_adicional['tipo'] = 'bodega'
+
+demanda_min = demanda_min[['1','2','3','4','5','6','7','8']]
+demanda_min['tipo'] = 'demanda'
+
+demanda_max = demanda_max[['1','2','3','4','5','6','7','8']]
+demanda_max['tipo'] = 'demanda'
+
+costo_produccion = costo_produccion[['1','2','3','4','5','6','7']]
+costo_produccion['tipo'] = 'produccion'
+
+costo_fijo_bodega_adicional = costo_fijo_bodega_adicional[['1']]
+costo_fijo_bodega_adicional['tipo'] = 'bodega'
+
+costo_almacenaje_adicional = costo_almacenaje_adicional[['1','2','3','4','5','6','7']]
+costo_almacenaje_adicional['tipo'] = 'bodega'
+
+costo_almacenaje = costo_almacenaje[['1','2','3','4','5','6','7']]
+costo_almacenaje['tipo'] = 'produccion'
+
+capacidad_almacenaje = capacidad_almacenaje[['1','2','3','4','5','6','7']]
+capacidad_almacenaje['tipo'] = 'produccion'
+
+capacidad_almacenaje_adicional = capacidad_almacenaje_adicional[['1','2','3','4','5','6','7']]
+capacidad_almacenaje_adicional['tipo'] = 'bodega'
