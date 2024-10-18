@@ -13,6 +13,22 @@ import numpy as np
 import osmnx as ox
 import parametros as R
 
+lista = []
+for i in range(1,R.T+1):
+    lista.append(str(i))
+
+id_prod = []
+for a in range(1,R.P+1):
+    id_prod.append(f'P{a}')
+
+id_bod = []
+for a in range(1,R.B+1):
+    id_bod.append(f'B{a}')
+
+id_dem = []
+for a in range(1,R.D+1):
+    id_dem.append(f'D{a}')
+
 # LECTURA DATOS Y CREACIÓN DE TABLAS
     # PRODUCCION
 ubicacion_produccion = pd.read_csv(R.RUTA1)
@@ -40,69 +56,91 @@ precio_venta = pd.read_csv(R.RUTA4)
 # Se crea un DataFrame combinado con todos los nodos y ubicaciones
 nodos_produccion = ubicacion_produccion[['id_nodo', 'x', 'y']].copy()
 nodos_produccion['tipo'] = 'produccion'
+nodos_produccion = nodos_produccion[0:R.P]
+nodos_produccion['id'] = id_prod
+
 
 nodos_bodegas = ubicacion_bodegas[['id_nodo', 'x', 'y']].copy()
 nodos_bodegas['tipo'] = 'bodega'
+nodos_bodegas = nodos_bodegas[0:R.B]
+nodos_bodegas['id'] = id_bod
+
 
 nodos_demanda = ubicacion_demanda[['id_nodo', 'x', 'y']].copy()
 nodos_demanda['tipo'] = 'demanda'
+nodos_demanda = nodos_demanda[0:R.D]
+nodos_demanda['id'] = id_dem
+
 
     # CREO TABLAS CON LA INFO DE LOS NODOS EN CADA PERDIODO
-precio_venta = precio_venta[['1','2','3','4','5','6','7']]
+        # DEMANDA
+precio_venta = precio_venta[lista]
 precio_venta['tipo'] = 'demanda'
+precio_venta = precio_venta[0:R.D]
+precio_venta['id'] = id_dem
 
-oferta_min_proveedores =oferta_min_proveedores[['1','2','3','4','5','6','7']]
+
+demanda_min = demanda_min[lista]
+demanda_min['tipo'] = 'demanda'
+demanda_min = demanda_min[0:R.D]
+demanda_min['id'] = id_dem
+
+demanda_max = demanda_max[lista]
+demanda_max['tipo'] = 'demanda'
+demanda_max = demanda_max[0:R.D]
+demanda_max['id'] = id_dem
+
+        # PRODUCCION
+oferta_min_proveedores =oferta_min_proveedores[lista]
 oferta_min_proveedores['tipo'] = 'produccion'
+oferta_min_proveedores = oferta_min_proveedores[0:R.P]
+oferta_min_proveedores['id'] = id_prod
 
-oferta_max_proveedores = oferta_max_proveedores[['1','2','3','4','5','6','7']]
+oferta_max_proveedores = oferta_max_proveedores[lista]
 oferta_max_proveedores['tipo'] = 'produccion'
+oferta_max_proveedores = oferta_max_proveedores[0:R.P]
+oferta_max_proveedores['id'] = id_prod
 
 inventario_inicial = inventario_inicial[['1']]
 inventario_inicial['tipo'] = 'produccion'
+inventario_inicial = inventario_inicial[0:R.P]
+inventario_inicial['id'] = id_prod
 
+costo_produccion = costo_produccion[lista]
+costo_produccion['tipo'] = 'produccion'
+costo_produccion = costo_produccion[0:R.P]
+costo_produccion['id'] = id_prod
+
+costo_almacenaje = costo_almacenaje[lista]
+costo_almacenaje['tipo'] = 'produccion'
+costo_almacenaje = costo_almacenaje[0:R.P]
+costo_almacenaje['id'] = id_prod
+
+capacidad_almacenaje = capacidad_almacenaje[lista]
+capacidad_almacenaje['tipo'] = 'produccion'
+capacidad_almacenaje = capacidad_almacenaje[0:R.P]
+capacidad_almacenaje['id'] = id_prod
+
+        # BODEGAS
 inventario_inicial_adicional = inventario_inicial_adicional[['1']]
 inventario_inicial_adicional['tipo'] = 'bodega'
-
-demanda_min = demanda_min[['1','2','3','4','5','6','7','8']]
-demanda_min['tipo'] = 'demanda'
-
-demanda_max = demanda_max[['1','2','3','4','5','6','7','8']]
-demanda_max['tipo'] = 'demanda'
-
-costo_produccion = costo_produccion[['1','2','3','4','5','6','7']]
-costo_produccion['tipo'] = 'produccion'
+inventario_inicial_adicional = inventario_inicial_adicional[0:R.B]
+inventario_inicial_adicional['id'] = id_bod
 
 costo_fijo_bodega_adicional = costo_fijo_bodega_adicional[['1']]
 costo_fijo_bodega_adicional['tipo'] = 'bodega'
+costo_fijo_bodega_adicional = costo_fijo_bodega_adicional[0:R.B]
+costo_fijo_bodega_adicional['id'] = id_bod
 
-costo_almacenaje_adicional = costo_almacenaje_adicional[['1','2','3','4','5','6','7']]
+costo_almacenaje_adicional = costo_almacenaje_adicional[lista]
 costo_almacenaje_adicional['tipo'] = 'bodega'
+costo_almacenaje_adicional = costo_almacenaje_adicional[0:R.B]
+costo_almacenaje_adicional['id'] = id_bod
 
-costo_almacenaje = costo_almacenaje[['1','2','3','4','5','6','7']]
-costo_almacenaje['tipo'] = 'produccion'
-
-capacidad_almacenaje = capacidad_almacenaje[['1','2','3','4','5','6','7']]
-capacidad_almacenaje['tipo'] = 'produccion'
-
-capacidad_almacenaje_adicional = capacidad_almacenaje_adicional[['1','2','3','4','5','6','7']]
+capacidad_almacenaje_adicional = capacidad_almacenaje_adicional[lista]
 capacidad_almacenaje_adicional['tipo'] = 'bodega'
-
-id_prod = []
-for a in range(1,len(nodos_produccion)+1):
-    id_prod.append(f'P{a}')
-
-id_bod = []
-for a in range(1,len(nodos_bodegas)+1):
-    id_bod.append(f'B{a}')
-
-id_dem = []
-for a in range(1,len(nodos_demanda)+1):
-    id_dem.append(f'D{a}')
-
-nodos_produccion['id'] = id_prod
-nodos_bodegas['id'] = id_bod
-nodos_demanda['id'] = id_dem
-
+capacidad_almacenaje_adicional = capacidad_almacenaje_adicional[0:R.B]
+capacidad_almacenaje_adicional['id'] = id_bod
 
 # Se combina en un solo DataFrame
 nodos_totales = pd.concat([nodos_produccion, nodos_bodegas, nodos_demanda], ignore_index=True)
@@ -127,6 +165,24 @@ for i, nodo_i in nodos_totales.iterrows():
 nodos_relevantes = list(grafo_vial.nodes)
 num_nodos = len(nodos_relevantes)
 matriz_distancias = np.zeros((num_nodos, num_nodos))
+
+# RESETEO LOS INDICES
+capacidad_almacenaje_adicional = capacidad_almacenaje_adicional.set_index('id')
+costo_almacenaje_adicional = costo_almacenaje_adicional.set_index('id')
+costo_fijo_bodega_adicional =costo_fijo_bodega_adicional.set_index('id')
+inventario_inicial_adicional = inventario_inicial_adicional.set_index('id')
+capacidad_almacenaje = capacidad_almacenaje.set_index('id')
+costo_almacenaje = costo_almacenaje.set_index('id')
+costo_produccion = costo_produccion.set_index('id')
+inventario_inicial = inventario_inicial.set_index('id')
+oferta_max_proveedores = oferta_max_proveedores.set_index('id')
+oferta_min_proveedores = oferta_min_proveedores.set_index('id')
+demanda_max = demanda_max.set_index('id')
+demanda_min = demanda_min.set_index('id')
+nodos_produccion = nodos_produccion.set_index('id')
+nodos_bodegas = nodos_bodegas.set_index('id')
+nodos_demanda = nodos_demanda.set_index('id')
+precio_venta = precio_venta.set_index('id')
 
 # Se llena la matriz
 '''for i, nodo_i in enumerate(nodos_relevantes):
