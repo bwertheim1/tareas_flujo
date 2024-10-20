@@ -56,19 +56,16 @@ precio_venta = pd.read_csv(R.RUTA4)
 # Se crea un DataFrame combinado con todos los nodos y ubicaciones
 nodos_produccion = ubicacion_produccion[['id_nodo', 'x', 'y']].copy()
 nodos_produccion['tipo'] = 'produccion'
-nodos_produccion = nodos_produccion[0:R.P]
 nodos_produccion['id'] = id_prod
 
 
 nodos_bodegas = ubicacion_bodegas[['id_nodo', 'x', 'y']].copy()
 nodos_bodegas['tipo'] = 'bodega'
-nodos_bodegas = nodos_bodegas[0:R.B]
 nodos_bodegas['id'] = id_bod
 
 
 nodos_demanda = ubicacion_demanda[['id_nodo', 'x', 'y']].copy()
 nodos_demanda['tipo'] = 'demanda'
-nodos_demanda = nodos_demanda[0:R.D]
 nodos_demanda['id'] = id_dem
 
 
@@ -76,70 +73,57 @@ nodos_demanda['id'] = id_dem
         # DEMANDA
 precio_venta = precio_venta[lista]
 precio_venta['tipo'] = 'demanda'
-precio_venta = precio_venta[0:R.D]
 precio_venta['id'] = id_dem
 
 
 demanda_min = demanda_min[lista]
 demanda_min['tipo'] = 'demanda'
-demanda_min = demanda_min[0:R.D]
 demanda_min['id'] = id_dem
 
 demanda_max = demanda_max[lista]
 demanda_max['tipo'] = 'demanda'
-demanda_max = demanda_max[0:R.D]
 demanda_max['id'] = id_dem
 
         # PRODUCCION
-oferta_min_proveedores =oferta_min_proveedores[lista]
+oferta_min_proveedores =oferta_min_proveedores[lista[:-1]]
 oferta_min_proveedores['tipo'] = 'produccion'
-oferta_min_proveedores = oferta_min_proveedores[0:R.P]
 oferta_min_proveedores['id'] = id_prod
 
-oferta_max_proveedores = oferta_max_proveedores[lista]
+oferta_max_proveedores = oferta_max_proveedores[lista[:-1]]
 oferta_max_proveedores['tipo'] = 'produccion'
-oferta_max_proveedores = oferta_max_proveedores[0:R.P]
 oferta_max_proveedores['id'] = id_prod
 
 inventario_inicial = inventario_inicial[['1']]
 inventario_inicial['tipo'] = 'produccion'
-inventario_inicial = inventario_inicial[0:R.P]
 inventario_inicial['id'] = id_prod
 
-costo_produccion = costo_produccion[lista]
+costo_produccion = costo_produccion[lista[:-1]]
 costo_produccion['tipo'] = 'produccion'
-costo_produccion = costo_produccion[0:R.P]
 costo_produccion['id'] = id_prod
 
-costo_almacenaje = costo_almacenaje[lista]
+costo_almacenaje = costo_almacenaje[lista[:-1]]
 costo_almacenaje['tipo'] = 'produccion'
-costo_almacenaje = costo_almacenaje[0:R.P]
 costo_almacenaje['id'] = id_prod
 
-capacidad_almacenaje = capacidad_almacenaje[lista]
+capacidad_almacenaje = capacidad_almacenaje[lista[:-1]]
 capacidad_almacenaje['tipo'] = 'produccion'
-capacidad_almacenaje = capacidad_almacenaje[0:R.P]
 capacidad_almacenaje['id'] = id_prod
 
         # BODEGAS
 inventario_inicial_adicional = inventario_inicial_adicional[['1']]
 inventario_inicial_adicional['tipo'] = 'bodega'
-inventario_inicial_adicional = inventario_inicial_adicional[0:R.B]
 inventario_inicial_adicional['id'] = id_bod
 
 costo_fijo_bodega_adicional = costo_fijo_bodega_adicional[['1']]
 costo_fijo_bodega_adicional['tipo'] = 'bodega'
-costo_fijo_bodega_adicional = costo_fijo_bodega_adicional[0:R.B]
 costo_fijo_bodega_adicional['id'] = id_bod
 
-costo_almacenaje_adicional = costo_almacenaje_adicional[lista]
+costo_almacenaje_adicional = costo_almacenaje_adicional[lista[:-1]]
 costo_almacenaje_adicional['tipo'] = 'bodega'
-costo_almacenaje_adicional = costo_almacenaje_adicional[0:R.B]
 costo_almacenaje_adicional['id'] = id_bod
 
-capacidad_almacenaje_adicional = capacidad_almacenaje_adicional[lista]
+capacidad_almacenaje_adicional = capacidad_almacenaje_adicional[lista[:-1]]
 capacidad_almacenaje_adicional['tipo'] = 'bodega'
-capacidad_almacenaje_adicional = capacidad_almacenaje_adicional[0:R.B]
 capacidad_almacenaje_adicional['id'] = id_bod
 
 # Se combina en un solo DataFrame
@@ -183,7 +167,7 @@ nodos_produccion = nodos_produccion.set_index('id')
 nodos_bodegas = nodos_bodegas.set_index('id')
 nodos_demanda = nodos_demanda.set_index('id')
 precio_venta = precio_venta.set_index('id')
-
+''
 # Se llena la matriz
 '''for i, nodo_i in enumerate(nodos_relevantes):
     for j, nodo_j in enumerate(nodos_relevantes):
@@ -201,4 +185,4 @@ c_tte = 1  # Puedes cambiar este valor según sea necesario
 
 # Se muestra la matriz de costos
 print("Matriz de Costos de Transporte entre Nodos:")
-print(matriz_costos_df)'''
+print(matriz_costos_df)'''''

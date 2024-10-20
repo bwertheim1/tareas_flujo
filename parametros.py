@@ -56,7 +56,7 @@ RUTA14 = os.path.join('datos',"costo_almacenaje.csv")
 RUTA15 = os.path.join('datos',"capacidad_almacenaje.csv")
 RUTA16 = os.path.join('datos',"capacidad_almacenaje_adicional.csv")
 
-T = 3
-P = 3
-B = 1
-D = 2
+T = 8
+P = 7
+B = 18
+D = 24
