@@ -175,7 +175,7 @@ precio_venta = precio_venta.set_index('id')
             matriz_distancias[i, j] = nx.shortest_path_length(grafo_vial, source=nodo_i, target=nodo_j, weight='weight')
 '''
 # Se define la constante de costo por unidad de distancia
-c_tte = 1  # Puedes cambiar este valor según sea necesario
+
 
 # Se calcula la matriz de costos basada en la matriz de distancias
 '''matriz_costos = c_tte * matriz_distancias'''
