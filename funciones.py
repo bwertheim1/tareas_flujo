@@ -3,10 +3,16 @@ import networkx as nx
 import numpy as np
 import os
 import osmnx as ox
+import re
+
+# funcion hecha por chat gpt, extrae los numero de un string
+def extraer_numeros(texto):
+    # Encuentra todos los números en el string y los convierte a enteros
+    numeros = [int(num) for num in re.findall(r'\d+', texto)]
+    return numeros
 
 # ESTO ENCUENTRAS LAS RUTAS MINIMAS ENTRE CUALQUIER PAR DE NODOS, DA IGUAL SI ES PRODUCCION, ALMACENAJE O DEMANDA
 # N son las rutas minimas de los N-primeros arcos del grafo G (de los 1,2...,n arcos)
-
 def rutas_min(grafo: nx.Graph, grafo_ciudad: nx.Graph, N: int):
     lista_pares_nodos = list(grafo.edges())
     dict_info_nodos = dict(grafo_ciudad.nodes(data=True))
@@ -29,7 +35,7 @@ def rutas_min(grafo: nx.Graph, grafo_ciudad: nx.Graph, N: int):
         destino = ox.distance.nearest_nodes(grafo_ciudad, x_D, y_D)
 
         r = nx.shortest_path(grafo_ciudad, origen, destino, weight='length')
-        d = nx.shortest_path_length(grafo_ciudad, origen, destino, weight='distance')
+        d = nx.shortest_path_length(grafo_ciudad, origen, destino, weight='length')
         rutas.append(r)
         distancias.append(d)
     
