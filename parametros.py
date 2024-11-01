@@ -5,38 +5,6 @@ import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
-# Instancia de Puerto Montt
-    # CODIGO QUE LA AYUDANTE PUSO EN EL PPT
-north = -41.4
-south = -41.496
-east = -72.85
-west = -73.03
-G0 = ox.graph_from_bbox(north,south,east,west,network_type='drive')
-
-    # Elimino los arcos paralelos, esto con el código que puso la ayudante
-G = G0.copy()
-duplicated = []
-for u,v,a in G.edges(data=True):
-    if len(G[u][v]) == 2:
-        duplicated.append((u,v,1))
-    elif len(G[u][v]) == 3:      
-        duplicated.append((u,v,1))
-        duplicated.append((u,v,2))
-duplicated = list(dict.fromkeys(duplicated))
-
-G.remove_edges_from(duplicated)
-
-# ESTO GRAFICA EL MAPA DE PTO MONTT Y PONE LOS NODOS DE PRODUCCION, BODEGA Y DEMANDA
-'''colores = {'demanda':'blue','bodega':'green','produccion':'black'}
-m=ox.folium.plot_graph_folium(G0, tiles='CartoDB positron', color='red', weight=1)
-for i in range(len(nodos_totales)):
-    nodo = nodos_totales.loc[i]
-    x = nodo['x']
-    y = nodo['y']
-    tipo = nodo['tipo']
-    folium.CircleMarker(location=[y, x], color = colores[tipo], radius=5, fill = True, fill_opacity = 10).add_to(m)
-m'''
-
 # PROCESAMIENTO DE TODAS LAS TABLAS
     # RUTAS RELATIVAS
 RUTA1 = os.path.join('datos','ubicacion_produccion.csv')
